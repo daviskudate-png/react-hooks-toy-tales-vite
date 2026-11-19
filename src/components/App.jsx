@@ -43,7 +43,29 @@ function App() {
     );
   }
 }
+async function handleLike(toyId) {
+  const toyToLike = toys.find((toy) => toy.id === toyId);
 
+  const response = await fetch(`http://localhost:3001/toys/${toyId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      likes: toyToLike.likes + 1
+    })
+  });
+
+  const updatedToy = await response.json();
+
+  if (response.ok) {
+    setToys((currentToys) =>
+      currentToys.map((toy) =>
+        toy.id === toyId ? updatedToy : toy
+      )
+    );
+  }
+}
   return (
     <>
       <Header />
@@ -56,9 +78,10 @@ function App() {
         <button onClick={handleClick}>Add a Toy</button>
       </div>
 
-      <ToyContainer
+    <ToyContainer
   toys={toys}
   onDonate={handleDonate}
+  onLike={handleLike}
 />
     </>
   );
