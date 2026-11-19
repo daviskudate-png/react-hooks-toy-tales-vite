@@ -2,17 +2,23 @@
 import React, { useState } from "react";
 
 function ToyForm({ onAddToy }) {
+  // Manage the toy name and image URL entered by the user
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
+// Submit the new toy and reset the form fields
+  function handleSubmit(e) {
+    e.preventDefault();
 
-  function handleSubmit(event) {
-    event.preventDefault();
-
+    console.log("Form submitted!");
+  console.log("Toy name:", name);
+  console.log("Toy image:", image);
     const newToy = {
       name: name,
       image: image,
       likes: 0
     };
+
+      console.log("New toy:", newToy);
 
     onAddToy(newToy);
 
@@ -31,7 +37,7 @@ function ToyForm({ onAddToy }) {
           placeholder="Enter a toy's name..."
           className="input-text"
           value={name}
-          onChange={(event) => setName(event.target.value)}
+          onChange={(e) => setName(e.target.value)}
         />
 
         <br />
@@ -42,7 +48,7 @@ function ToyForm({ onAddToy }) {
           placeholder="Enter a toy's image URL..."
           className="input-text"
           value={image}
-          onChange={(event) => setImage(event.target.value)}
+          onChange={(e) => setImage(e.target.value)}
         />
 
         <br />
