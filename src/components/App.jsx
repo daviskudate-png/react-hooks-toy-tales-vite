@@ -32,6 +32,17 @@ function App() {
 
     setToys((currentToys) => [...currentToys, data]);
   }
+  async function handleDonate(toyId) {
+  const response = await fetch(`http://localhost:3001/toys/${toyId}`, {
+    method: "DELETE"
+  });
+
+  if (response.ok) {
+    setToys((currentToys) =>
+      currentToys.filter((toy) => toy.id !== toyId)
+    );
+  }
+}
 
   return (
     <>
@@ -45,7 +56,10 @@ function App() {
         <button onClick={handleClick}>Add a Toy</button>
       </div>
 
-      <ToyContainer toys={toys} />
+      <ToyContainer
+  toys={toys}
+  onDonate={handleDonate}
+/>
     </>
   );
 }
